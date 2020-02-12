@@ -227,14 +227,40 @@ example1 example2 example3
     6.Карьера
 ```
 
-Как обратиться к элементу? 
+#### Как искать элемент на странице
 
-Два способа
-XPath Css
-Xpath- язык запросов к элементам по DOM. 
-
-DOM-дерево
-
+XPath
+```
 Основой HTML-документа являются теги.
 В соответствии с объектной моделью документа («Document Object Model», коротко DOM), каждый HTML-тег является объектом. Вложенные теги являются «детьми» родительского элемента. Текст, который находится внутри тега, также является объектом.
 
+Xpath - язык запросов к элементам по DOM. 
+```
+CSS
+```
+CSS (Cascading Style Sheets) — язык таблиц стилей, который позволяет прикреплять стиль (например, шрифты и цвет) к структурированным документам (например, документам HTML и приложениям XML).
+
+В CSS есть паттерны, согласно которым стили, создаваемые разработчиком, применяются к элементам страницы (DOM). Эти паттерны называются локаторы (selectors). Selenium WebDriver использует тот же принцип для нахождения элементов. И он намного быстрее, чем поиск элементов на основе XPath.
+```
+
+#### Первый тест "Простой пример"
+```java
+Selenide.open("https://geekbrains.ru/courses");
+Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/courses\"]").click();
+Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Курсы"));
+
+Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/events\"]").click();
+Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Вебинары"));
+
+Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/topics\"]").click();
+Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Форум"));
+
+Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/posts\"]").click();
+Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Блог"));
+
+Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/tests\"]").click();
+Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Тесты"));
+
+Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/career\"]").click();
+Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Карьера"));
+```

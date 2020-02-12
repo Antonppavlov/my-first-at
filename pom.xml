@@ -77,8 +77,6 @@
                     <rerunFailingTestsCount>2</rerunFailingTestsCount>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.1/aspectjweaver-1.9.1.jar"
-                        -Dcucumber.options="
-                        --plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
                     </argLine>
                 </configuration>
                 <dependencies>
