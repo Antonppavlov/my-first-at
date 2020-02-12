@@ -1,0 +1,240 @@
+# Разворачиваем инфраструктуру для автоматизации тестирования WEB-приложений на macOS
+
+## Настройка
+### Установка JDK
+
+Скачать openjdk:
+
+```
+https://adoptopenjdk.net/index.html?variant=openjdk8&jvmVariant=hotspot
+```
+Установить по умолчанию
+
+### Установка MAVEN
+
+Скачать:
+```
+http://mirror.linux-ia64.org/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
+```
+Переместить :
+```
+sudo mkdir /Library/maven
+sudo mv /Users/antonpavlov/Downloads/apache-maven-3.6.3 /Library/maven
+```
+### Git
+
+Скачать
+```
+https://git-scm.com
+```
+Установка по умолчанию
+
+### Прописать jdk и maven в переменное окружение
+```
+nano ~/.bash_profile
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+export PATH=$PATH:$JAVA_HOME/bin
+export M2_HOME=/Library/maven/apache-maven-3.6.3
+export PATH=$PATH:$M2_HOME/bin
+```
+
+### Проверить что jdk, maven, git успешно установлены
+```
+java -version
+mvn -v
+git --version
+```
+
+### Установка и настройка IDEA
+Скачать
+```
+https://www.jetbrains.com/ru-ru/idea/download/
+```
+
+##### Настройка при установке
+1 окно
+2 окно
+- отключить все не нужные плагины
+
+##### Настройка после установки
+
+Перейти в Preferences
+```
+вкладка enable 
+	включить чекбокс: annotation processing
+вкладка Maven
+	указать путь /Library/maven/apache-maven-3.6.3
+	вкладка Importing
+		указать 1.8 jdk
+вкладка git 
+	проверить работу нажав: test
+вкладка file encoding
+	включить чекбокс: transparent native-to-ascii convert
+```
+Перейти в plugins и установить:
+```
+lombok
+```
+Перейти в Structure for New Projects
+```
+sdk -  выбрать 1.8
+```
+
+### Старт проекта
+```
+В Idea нажать New Project
+Выбрать Maven - без архетипа
+Название проекта:
+my-first-at
+Finish
+```
+
+### Работа с pom:
+#### Подключение плагинов:
+```
+<!--Для работы с кириллицей-->
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+</properties>
+
+<!--https://www.apache-maven.ru/plugins/maven-compiler-plugin.html-->
+<!--Явно указывает компилятору что используем java 8-->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+
+<!--Запуск локального веб сервера для просмотра отчета allure-->
+<!--https://github.com/allure-framework/allure-maven-->
+<plugin>
+    <groupId>io.qameta.allure</groupId>
+    <artifactId>allure-maven</artifactId>
+    <version>2.10.0</version>
+    <configuration>
+        <reportVersion>2.13.0</reportVersion>
+        <resultsDirectory>allure-results</resultsDirectory>
+    </configuration>
+</plugin>
+
+<!--Запуск тестов -->
+<!--https://www.apache-maven.ru/plugins/maven-surefire-plugin.html-->
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.22.1</version>
+    <configuration>
+        <!--Количество потоков-->
+        <threadCount>1</threadCount>
+        <!--Как будет распаралеливать-->
+        <parallel>methods</parallel>
+        <!--true - количество потоков будет на каждое ядро, false - распределится-->
+        <perCoreThreadCount>false</perCoreThreadCount>
+        <!--true - Статус билда не зависит от прохождения тестов-->
+        <testFailureIgnore>true</testFailureIgnore>
+        <!--Количество попыток для прохождения теста-->
+        <rerunFailingTestsCount>2</rerunFailingTestsCount>
+        <!--Аргументы которые будут добавлены при запуске тестов-->
+        <argLine>
+            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.1/aspectjweaver-1.9.1.jar"
+        </argLine>
+    </configuration>
+    <!-- агент, который слушаетсобытия Allure и собирает информацию для отчета-->
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.1</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+
+#### Подключение библиотек
+```
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!--WEB ТЕСТИРОВАНИЕ-->
+    <selenide.version>5.7.0</selenide.version>
+    <!--ОТЧЕТ ALLURE-->
+    <allure.version>2.13.0</allure.version>
+    <!--LOMBOK-->
+    <lombok.version>1.18.10</lombok.version>
+</properties>
+
+<dependencies>
+    <!--WEB ТЕСТИРОВАНИЕ-->
+    <dependency>
+        <groupId>com.codeborne</groupId>
+        <artifactId>selenide</artifactId>
+        <version>${selenide.version}</version>
+    </dependency>
+    <!--ОТЧЕТ ALLURE-->
+    <dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-selenide</artifactId>
+        <version>${allure.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-junit5</artifactId>
+        <version>${allure.version}</version>
+    </dependency>
+    <!--LOMBOK-->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+    </dependency>
+</dependencies>
+```
+
+## Написание автотеста
+##### Тестируемый сайт: https://geekbrains.ru/events
+
+#### Создание корневого пакета
+Пакеты необходимы для размещения файлов по папкам, решения проблемы коллизии имен и для разделения доступа классов друг к другу. Именно благодаря пакетам мы можем через точку . получать доступ к нужным классам различных библиотек.
+```
+ru.geekbrains.my.first.at
+```
+
+#### Создание первого класса в test
+```
+FirstTest
+```
+#### Создание пакетов для хранения разных подходов
+Создать пакеты 
+```
+example1 example2 example3
+```
+#### Создание первого класса в test
+Шаги теста:
+```
+1.Зайти на сайт https://geekbrains.ru/courses
+2.Нажать на кнопку Курсы
+3.Проверить что страница Курсы открылась
+4.Повторить для
+    1.Вебинары
+    2.Форум
+    3.Блог
+    4.Обучение
+    5.Тесты
+    6.Карьера
+```
+
+Как обратиться к элементу? 
+
+Два способа
+XPath Css
+Xpath- язык запросов к элементам по DOM. 
+
+DOM-дерево
+
+Основой HTML-документа являются теги.
+В соответствии с объектной моделью документа («Document Object Model», коротко DOM), каждый HTML-тег является объектом. Вложенные теги являются «детьми» родительского элемента. Текст, который находится внутри тега, также является объектом.
+
