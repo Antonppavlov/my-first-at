@@ -17,7 +17,7 @@ public class FirstTest {
 //             3.Форум
 //             4.Блог
 //             5.Тесты
-//             6.Тесты
+//             6.Карьера
 
         Selenide.open("https://geekbrains.ru/courses");
         Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/courses\"]").click();
