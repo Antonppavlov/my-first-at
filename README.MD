@@ -46,6 +46,62 @@ mvn -v
 git --version
 ```
 
+
+### Docker
+Зарегистрироваться:
+```
+https://hub.docker.com/signup?next=%2F%3Fref%3Dlogin
+```
+
+Скачать:
+```
+https://hub.docker.com/editions/community/docker-ce-desktop-mac
+```
+
+### Selenoid
+Полезные ссылки:
+```
+https://aerokube.com/selenoid/latest/
+https://aerokube.com/cm/latest/
+```
+Устанавливаем CM:
+```
+curl -s https://aerokube.com/cm/bash | bash
+```
+Быстрый старт:
+```
+./cm selenoid start --vnc --browsers 'chrome:80'
+./cm selenoid-ui start
+```
+Старт Selenoid-UI отдельным контейнером с явным указанием ссылки на Selenoid
+```
+docker run -d --name selenoid-ui  --link selenoid -p 8080:8080 aerokube/selenoid-ui --selenoid-uri=http://192.168.31.48:4444
+```
+После исправления от Aerokube должно заработать командой:
+```
+./cm selenoid-ui start -force --args "-selenoid-uri http://192.168.31.48:4444"
+```
+Selenoid доступен:
+```
+http://localhost:8080
+```
+
+### Jenkins
+Полезные ссылки:
+```
+https://jenkins.io/
+https://hub.docker.com/r/jenkins/jenkins/
+```
+Команда для установки:
+```
+docker run --name jenkins -p 8000:8080 -p 50000:50000 -v /Users/antonpavlov/Documents/jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+```
+
+Jenkins доступен:
+```
+http://localhost:8000
+```
+
 ### Установка и настройка IDEA
 Скачать
 ```
