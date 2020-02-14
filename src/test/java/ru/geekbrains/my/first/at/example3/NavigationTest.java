@@ -4,8 +4,11 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import ru.geekbrains.my.first.at.example2.page.Page;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class NavigationTest {
 
     private final Page page = new Page();
