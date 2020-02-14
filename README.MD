@@ -300,6 +300,7 @@ CSS (Cascading Style Sheets) — язык таблиц стилей, котор�
 ```
 
 #### Первый тест "Простой пример"
+
 ```java
 Selenide.open("https://geekbrains.ru/courses");
 Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/courses\"]").click();
@@ -319,4 +320,9 @@ Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Те�
 
 Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/career\"]").click();
 Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Карьера"));
+```
+
+#### Распаралеливаем тесты
+```
+http://antkorwin.com/junit5/junit5_parallel_execution.html
 ```

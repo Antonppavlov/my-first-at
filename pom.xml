@@ -14,18 +14,13 @@
         <selenide.version>5.7.0</selenide.version>
         <!--ОТЧЕТ ALLURE-->
         <allure.version>2.13.0</allure.version>
+        <!--ТЕСТ РАННЕР-->
+        <junit.version>5.6.0</junit.version>
         <!--LOMBOK-->
         <lombok.version>1.18.10</lombok.version>
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>4.2.0</version>
-            <scope>test</scope>
-        </dependency>
 
         <!--WEB ТЕСТИРОВАНИЕ-->
         <dependency>
@@ -50,6 +45,24 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
+
+
+        <!--ТЕСТ РАННЕР-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+        </dependency>
     </dependencies>
 
 
@@ -71,7 +84,7 @@
                 <version>2.22.1</version>
                 <configuration>
                     <threadCount>5</threadCount>
-                    <parallel>methods</parallel>
+                    <parallel>classes</parallel>
                     <perCoreThreadCount>false</perCoreThreadCount>
                     <testFailureIgnore>true</testFailureIgnore>
                     <rerunFailingTestsCount>2</rerunFailingTestsCount>
