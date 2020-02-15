@@ -1,10 +1,25 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-               echo 'This is a minimal pipeline.'
-            }
-        }
-    }
+  agent any
+  tools {
+  maven 'maven'
+  allure 'allure'
+}
+stages {
+  stage('clone repository'){
+  steps{
+  deleteDir()
+  git branch: 'master', credentialsId: 'gitlab_new', url: 'https://github.com/Antonppavlov/my-first-at.git'
+}
+}
+stage('run tests') {
+steps {
+sh "mvn test -Dselenide.browser=chrome -Dselenide.remote=http://192.168.31.48:4444/wd/hub"
+}
+}
+stage('generate allure report') {
+steps {
+allure includeProperties: false, jdk: '', results: [[path: 'tests/target/allure-results']]
+}
+}
+}
 }
