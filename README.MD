@@ -102,6 +102,30 @@ Jenkins доступен:
 http://localhost:8000
 ```
 
+#### Jenkins настройка:
+
+##### Установить maven
+```
+http://localhost:8000/configureTools/
+Проскролить к Maven
+Указать имя "maven"
+Чекбокс "Install automatically"
+Выбрать версию "3.6.3"
+Нажать кнопку "Save"
+```
+##### Установить плагин Allure
+```
+http://localhost:8000/pluginManager/available
+В поиск ввест "Allure" нажать "Enter" на клавиатуре
+В списке выбрать "Allure" и нажать Чекбокс напротив
+Нажать кнопку "Установить без перезагрузки"
+После установки перейти http://localhost:8000/configureTools/
+Проскролить к "Allure"
+Указать имя "allure"
+Чекбокс "Install automatically"
+Выбрать версию "2.13.1"
+Нажать кнопку "Save"
+```
 ### Установка и настройка IDEA
 Скачать
 ```
@@ -352,28 +376,28 @@ pipeline {
 Как выглядит нужный пример
 ```
 pipeline {
-  agent any
-  tools {
-    maven 'maven'
-    allure 'allure'
-  }
-  stages {
-    stage('clone repository'){
-      steps{
-        deleteDir()
-        git branch: 'master', credentialsId: 'gitlab_new', url: 'https://github.com/Antonppavlov/my-first-at.git'
+    agent any
+    tools {
+        maven 'maven'
+        allure 'allure'
+    }
+    stages {
+        stage('clone repository') {
+            steps {
+                deleteDir()
+                git branch: 'master', credentialsId: 'gitlab_new', url: 'https://github.com/Antonppavlov/my-first-at.git'
+            }
+        }
+        stage('run tests') {
+            steps {
+                sh "mvn test -Dselenide.browser=chrome -Dselenide.remote=http://192.168.31.48:4444/wd/hub"
+            }
+        }
+        stage('generate allure report') {
+            steps {
+                allure includeProperties: false, jdk: '', results: [[path: 'tests/target/allure-results']]
+            }
         }
     }
-    stage('run tests') {
-      steps {
-        sh "mvn test -Dselenide.browser=chrome -Dselenide.remote=http://192.168.31.48:4444/wd/hub"
-      }
-    }
-    stage('generate allure report') {
-      steps {
-        allure includeProperties: false, jdk: '', results: [[path: 'tests/target/allure-results']]
-      }
-  }
-}
 }
 ```
