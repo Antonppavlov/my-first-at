@@ -10,7 +10,6 @@ import io.qameta.allure.Story;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.geekbrains.my.first.at.example2.page.Page;
 
@@ -29,11 +28,11 @@ public class NavigationTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "Курсы",
-//            "Вебинары",
-//            "Форум",
-//            "Блог",
-//            "Тесты",
-//            "Карьера"
+            "Вебинары",
+            "Форум",
+            "Блог",
+            "Тесты",
+            "Карьера"
     })
     @Feature("Проверка перехода")
     public void button(String name) {

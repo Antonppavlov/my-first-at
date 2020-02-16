@@ -271,6 +271,9 @@ Finish
     <allure.version>2.13.0</allure.version>
     <!--LOMBOK-->
     <lombok.version>1.18.10</lombok.version>
+    <!--ТЕСТ РАННЕР-->
+    <junit-jupiter.version>5.6.0</junit-jupiter.version>
+    <junit-platform.version>1.6.0</junit-platform.version>
 </properties>
 
 <dependencies>
@@ -296,6 +299,37 @@ Finish
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
         <version>${lombok.version}</version>
+    </dependency>
+    <!--ТЕСТ РАННЕР-->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${junit-jupiter.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit-jupiter.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit-jupiter.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>${junit-jupiter.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-engine</artifactId>
+        <version>${junit-platform.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-launcher</artifactId>
+        <version>${junit-platform.version}</version>
     </dependency>
 </dependencies>
 ```
