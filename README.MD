@@ -11,8 +11,7 @@ https://adoptopenjdk.net/index.html?variant=openjdk8&jvmVariant=hotspot
 Установка по умолчанию
 
 ### Установка MAVEN
-Apache Maven — фреймворк для автоматизации сборки проектов на основе описания их структуры в файлах на языке POM (англ. Project Object Model), 
-
+Мавен - это инструмент для сборки Java проекта: компиляции, создания jar, создания дистрибутива программы, генерации документации. Простые проекты можно собрать в командной строке. Если собирать большие проекты с командной строки, то команда для сборки будет очень длинной, поэтому её иногда записывают в bat/sh скрипт. Но такие скрипты зависят от платформы. Для того чтобы избавиться от этой зависимости и упростить написание скрипта используют инструменты для сборки проекта.
 Скачать:
 ```
 http://mirror.linux-ia64.org/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
@@ -85,7 +84,7 @@ sudo mkdir /Users/antonpavlov/Documents/jenkins_hom
 ```
 Команда для установки:
 ```
-docker run --name jenkins -p 8000:8080 -p 50000:50000 -v /Users/antonpavlov/Documents/jenkins_home:/var/jenkins_home jenkins/jenkins:lts
+docker run --name jenkins -p 8000:8080 -p 50000:50000 -v /Users/antonpavlov/jenkins_home:/var/jenkins_home jenkins/jenkins:lts
 ```
 Устанавливаем по умолчанию
 
