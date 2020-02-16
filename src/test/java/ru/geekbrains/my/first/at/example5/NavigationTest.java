@@ -9,11 +9,13 @@ import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.geekbrains.my.first.at.example2.page.Page;
 
-
+@Execution(ExecutionMode.CONCURRENT)
 @Story("Навигация")
 public class NavigationTest {
 

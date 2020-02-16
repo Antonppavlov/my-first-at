@@ -62,7 +62,6 @@
             <artifactId>junit-jupiter-params</artifactId>
             <version>${junit-jupiter.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
@@ -79,8 +78,6 @@
             <version>${junit-platform.version}</version>
         </dependency>
     </dependencies>
-
-
 
     <build>
         <plugins>
@@ -109,7 +106,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.1/aspectjweaver-1.9.1.jar"
                     </argLine>
                 </configuration>
-                <!-- Aгент, который слушает события Allure и собирает информацию для отчета-->
+                <!-- Агент который слушает события Allure и собирает информацию для отчета-->
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
