@@ -15,7 +15,6 @@ import ru.geekbrains.my.first.at.example2.page.Page;
 
 
 @Story("Навигация")
-
 public class NavigationTest {
 
     @BeforeEach
