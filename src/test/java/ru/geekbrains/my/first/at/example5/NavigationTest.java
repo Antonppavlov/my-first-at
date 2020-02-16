@@ -28,18 +28,18 @@ public class NavigationTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "Курсы",
-            "Вебинары",
-            "Форум",
-            "Блог",
-            "Тесты",
-            "Карьера"
+//            "Вебинары",
+//            "Форум",
+//            "Блог",
+//            "Тесты",
+//            "Карьера"
     })
     @Feature("Проверка перехода")
     public void button(String name) {
         openPage("https://geekbrains.ru/courses");
         Page page = new Page();
         page.getNavigation().getButton(name).click();
-        page.getHeader().getTitle().shouldHave(Condition.exactText(name));
+        page.getHeader().getTitle().shouldHave(Condition.exactText(name+"ф"));
     }
 
     @Step("Открываю страницу: {url}")
