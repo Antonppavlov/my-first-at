@@ -198,7 +198,7 @@ Finish
 
 ### Работа с pom:
 #### Подключение плагинов:
-```
+```xml
 <!--Для работы с кириллицей-->
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -224,7 +224,6 @@ Finish
     <version>2.10.0</version>
     <configuration>
         <reportVersion>2.13.0</reportVersion>
-        <resultsDirectory>allure-results</resultsDirectory>
     </configuration>
 </plugin>
 
@@ -235,22 +234,17 @@ Finish
     <artifactId>maven-surefire-plugin</artifactId>
     <version>2.22.1</version>
     <configuration>
-        <!--Количество потоков-->
-        <threadCount>1</threadCount>
-        <!--Как будет распаралеливать-->
-        <parallel>methods</parallel>
-        <!--true - количество потоков будет на каждое ядро, false - распределится-->
-        <perCoreThreadCount>false</perCoreThreadCount>
         <!--true - Статус билда не зависит от прохождения тестов-->
         <testFailureIgnore>true</testFailureIgnore>
-        <!--Количество попыток для прохождения теста-->
-        <rerunFailingTestsCount>2</rerunFailingTestsCount>
+        <includes>
+            <include>**/*Test*.java</include>
+        </includes>
         <!--Аргументы которые будут добавлены при запуске тестов-->
         <argLine>
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.1/aspectjweaver-1.9.1.jar"
         </argLine>
     </configuration>
-    <!-- агент, который слушаетсобытия Allure и собирает информацию для отчета-->
+    <!-- Aгент, который слушает события Allure и собирает информацию для отчета-->
     <dependencies>
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -262,7 +256,7 @@ Finish
 ```
 
 #### Подключение библиотек
-```
+```xml
 <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--WEB ТЕСТИРОВАНИЕ-->
@@ -387,24 +381,79 @@ CSS (Cascading Style Sheets) — язык таблиц стилей, котор�
 #### Первый тест "Простой пример"
 
 ```java
-Selenide.open("https://geekbrains.ru/courses");
-Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/courses\"]").click();
-Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Курсы"));
+public class NavigationTest {
 
-Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/events\"]").click();
-Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Вебинары"));
+    @Test
+    public void checkNavigation(){
+        Selenide.open("https://geekbrains.ru/courses");
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/courses\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Курсы"));
 
-Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/topics\"]").click();
-Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Форум"));
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/events\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Вебинары"));
 
-Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/posts\"]").click();
-Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Блог"));
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/topics\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Форум"));
 
-Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/tests\"]").click();
-Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Тесты"));
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/posts\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Блог"));
 
-Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/career\"]").click();
-Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Карьера"));
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/tests\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Тесты"));
+
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/career\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Карьера"));
+    }
+}
+```
+
+#### Разбиваем на тесты
+
+```java
+public class NavigationTest {
+
+    @BeforeEach
+    public void beforeEach(){
+        Selenide.open("https://geekbrains.ru/courses");
+    }
+
+    @Test
+    public void courses(){
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/courses\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Курсы"));
+    }
+
+    @Test
+    public void topics(){
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/topics\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Форум"));
+    }
+
+    @Test
+    public void events(){
+        Selenide.$("[class=\"gb-left-menu__nav\"] [hrPaef=\"/events\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Вебинары"));
+    }
+
+    @Test
+    public void posts(){
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/posts\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Блог"));
+    }
+
+    @Test
+    public void tests(){
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/tests\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Тесты"));
+    }
+
+    @Test
+    public void career(){
+        Selenide.$("[class=\"gb-left-menu__nav\"] [href=\"/career\"]").click();
+        Selenide.$("[class=\"gb-header__title\"]").shouldHave(Condition.exactText("Карьера"));
+    }
+
+}
 ```
 
 #### Allure
@@ -428,7 +477,7 @@ mvn clean test -Dselenide.browser=chrome -Dselenide.remote=http://192.168.31.48:
 Проверим что Jenkins скачивает проект из git
 
 Создать Jenkinsfile
-```
+```groovy
 pipeline {
     agent any
     stages {
@@ -441,7 +490,7 @@ pipeline {
 }
 ```
 Как выглядит нужный пример
-```
+```groovy
 pipeline {
     agent any
     tools {
@@ -462,7 +511,7 @@ pipeline {
         }
         stage('generate allure report') {
             steps {
-                allure includeProperties: false, jdk: '', results: [[path: 'tests/target/allure-results']]
+                allure includeProperties: false, jdk: '', results: [[path: 'target/allure-results']]
             }
         }
     }

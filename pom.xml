@@ -104,10 +104,12 @@
                     <includes>
                         <include>**/*Test*.java</include>
                     </includes>
+                    <!--Аргументы которые будут добавлены при запуске тестов-->
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.1/aspectjweaver-1.9.1.jar"
                     </argLine>
                 </configuration>
+                <!-- Aгент, который слушает события Allure и собирает информацию для отчета-->
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
