@@ -8,6 +8,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -35,6 +36,7 @@ public class NavigationTest {
     })
     @Feature("Проверка перехода")
     public void button(String name) {
+        Assert.fail();
         openPage("https://geekbrains.ru/courses");
         Page page = new Page();
         page.getNavigation().getButton(name).click();
