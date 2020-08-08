@@ -32,18 +32,18 @@ https://git-scm.com
 
 ### Прописать jdk и maven в переменное окружение
 ```
-nano ~/.bash_profile
+nano ~/.zshrc 
 ```
-Ввести в bash_profile:
+Ввести в zshrc:
 ```
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
 export PATH=$PATH:$JAVA_HOME/bin
 export M2_HOME=/Library/maven/apache-maven-3.6.3
 export PATH=$PATH:$M2_HOME/bin
 ```
-Применить bash_profile:
+Применить для zshrc:
 ```
-source ~/.bash_profile
+source ~/.zshrc
 ```
 
 ### Проверить что jdk, maven, git успешно установлены
